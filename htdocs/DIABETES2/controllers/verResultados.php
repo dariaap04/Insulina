@@ -458,13 +458,13 @@ $con->close();
                     <label for="dia">Seleccionar día específico (opcional):</label>
                     <input type="number" name="dia" id="dia" min="1" max="31" class="form-control mb-2" 
                            value="<?php echo isset($_POST['dia']) ? $_POST['dia'] : ''; ?>">
-                    <small class="text-muted">Deja en blanco para mostrar todos los días</small>
+                    <small class="text-danger">**Deja en blanco para mostrar todos los días**</small>
                 </div>
                 
                 <button type="submit" class="update-btn">
                     <i class="fas fa-sync-alt me-2"></i>Actualizar
                 </button>
-                
+
             </form> 
         </div>
 
@@ -506,6 +506,14 @@ $numSemanas = ceil(($diasDelMes + $primerDia) / 7);
             
             // Verificar si el día está dentro del mes actual
             if ($dia > 0 && $dia <= $diasDelMes) {
+                $diaSeleccionado = isset($_POST['dia']) && !empty($_POST['dia']) ? (int)$_POST['dia'] : null;
+
+                if($diaSeleccionado !== null && $dia != $diaSeleccionado){
+                    continue;
+                }
+
+
+
                 $desayuno = isset($desayunoData[$dia]) ? $desayunoData[$dia] : [];
                 $comida = isset($comidaData[$dia]) ? $comidaData[$dia] : [];
                 $merienda = isset($meriendaData[$dia]) ? $meriendaData[$dia] : [];
