@@ -21,10 +21,10 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $_SESSION['usuario'] = $usuario;
-    header("Location: formularios.html");
+    header("Location: ../views/formularios.html");
     exit();
 } else {
-    header("Location: index.html?error=1");
+    header("Location: ../views/index.html?error=1");
     exit();
 }
 ?>

@@ -1,20 +1,18 @@
 <?php 
-    session_start();  
-    /* Verificar si estamos conectados con el usuario */ 
-    if (!isset($_SESSION['usuario'])) { 
-        header('Location: login.php'); 
-        exit();  
-    } 
-
-    $usuario = $_SESSION['usuario']; 
-
-    /* Hacemos la conexión */ 
-    require_once "login1.php";  
-    $con = new mysqli($localhost, $username, $pw, $database); 
-    if ($con->connect_error) { 
-        die("Connection failed: " . $con->connect_error); 
-    } 
-
+    session_start();
+    if (!isset($_SESSION['usuario'])) {
+        header('Location: ../auth/login.php');
+        exit();
+    }
+    $usuario = $_SESSION['usuario'];
+    
+    // Conexión a la base de datos
+    require_once "../auth/login1.php";
+    $con = new mysqli($localhost, $username, $pw, $database);
+    
+    if ($con->connect_error) {
+        die("Error de conexión: " . $con->connect_error);
+    }
     /* Si se han rellenado los datos, verificamos si se han enviado */ 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
         if (isset($_POST["fecha"], $_POST["comida"], $_POST["gl1h"], $_POST["rac"], $_POST["insulina"], $_POST["gl2h"])) { 

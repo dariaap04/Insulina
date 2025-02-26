@@ -1,13 +1,13 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 $usuario = $_SESSION['usuario'];
 
 // Conexión a la base de datos
-require_once "login1.php";
+require_once "../auth/login1.php";
 $con = new mysqli($localhost, $username, $pw, $database);
 
 if ($con->connect_error) {

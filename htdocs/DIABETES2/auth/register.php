@@ -30,7 +30,7 @@ session_start();
        
     
     echo "Registro completado";
-    header('Location: index.html'); //Redirecciona al index al finalizar la operación.
+    header('Location: ../views/index.html'); //Redirecciona al index al finalizar la operación.
     $con->close();
     
 ?>
