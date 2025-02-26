@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Glucosa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">Control de Glucosa</h1>
+        <hr>
+        <div class="col-6">
+            <form id="formularioPrincipal" method="POST" action="saveAll.php">
+                <input type="hidden" id="estado_glucosa" name="estado_glucosa" value="ninguna">
+                <!-- Datos Generales -->
+                <div class="mb-3">
+                    <label>Fecha</label>
+                    <input type="date" id="fecha" name="fecha" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label>Tipo de comida</label><br>
+                    <div class="d-flex gap-3">
+                        <input type="radio" id="desayuno" name="comida" value="Desayuno" required>
+                        <label for="desayuno">Desayuno</label>
+                        <input type="radio" id="comida" name="comida" value="Comida">
+                        <label for="comida">Comida</label>
+                        <input type="radio" id="merienda" name="comida" value="Merienda">
+                        <label for="merienda">Merienda</label>
+                        <input type="radio" id="cena" name="comida" value="Cena">
+                        <label for="cena">Cena</label>
+                    </div>
+                </div>
+
+                <!-- Modal para formulario de glucosa -->
+                <div class="modal fade" id="glucosaModal" tabindex="-1" aria-labelledby="glucosaModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="glucosaModalLabel">Registro de Glucosa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="gl1h">GL/1H</label>
+                                <input type="number" class="form-control" id="gl1h" name="gl1h" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rac">RAC</label>
+                                <input type="number" class="form-control" id="rac" name="rac" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="insulina">Insulina</label>
+                                <input type="number" class="form-control" id="insulina" name="insulina" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gl2h">GL/2H</label>
+                                <input type="number" class="form-control" id="gl2h" name="gl2h" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" onclick="guardarFormulario(event)">Guardar</button>
+                </div>
+                </div>
+
+                <script>
+                document.querySelectorAll('input[name="comida"]').forEach(function(radio) {
+                    radio.addEventListener('change', function() {
+                        var modal = new bootstrap.Modal(document.getElementById('glucosaModal'));
+                        modal.show();
+                    });
+                });
+                </script>
+
+                <!-- Selección de Estado -->
+                <ul class="nav nav-pills mb-3 justify-content-center" id="estado-tab">
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" onclick="seleccionarEstado('ninguna')">Ninguna</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" onclick="seleccionarEstado('hipo')">Hipoglucosa</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" onclick="seleccionarEstado('hiper')">Hiperglucosa</button>
+                    </li>
+                </ul>
+
+                <!-- Formulario Hipoglucosa -->
+                <div id="hipo-form" class="d-none">
+                    <div class="mb-3">
+                        <label for="glucosa1">Glucosa</label>
+                        <input type="number" class="form-control" id="glucosa1" name="glucosa1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hora1">Hora</label>
+                        <input type="time" class="form-control" id="hora1" name="hora1">
+                    </div>
+                </div>
+
+                <!-- Formulario Hiperglucosa -->
+                <div id="hiper-form" class="d-none">
+                    <div class="mb-3">
+                        <label for="glucosa2">Glucosa</label>
+                        <input type="number" class="form-control" id="glucosa2" name="glucosa2">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hora2">Hora</label>
+                        <input type="time" class="form-control" id="hora2" name="hora2">
+                    </div>
+                    <div class="mb-3">
+                        <label for="correccion">Corrección</label>
+                        <input type="number" class="form-control" id="correccion" name="correccion">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">Guardar</button>
+            </form>
+        </div>    
+    </div>
+    <div class="buttons"> 
+        <button type="button" onclick="location.href='verResultados.php'">Ver Resultados</button> 
+        <button type="button" onclick="location.href='index.html'">Cerrar Sesión</button> 
+    </div> 
+
+    <script>
+        function seleccionarEstado(estado) {
+            document.getElementById('estado_glucosa').value = estado;
+            document.getElementById('hipo-form').classList.add('d-none');
+            document.getElementById('hiper-form').classList.add('d-none');
+            
+            if (estado === 'hipo') {
+                document.getElementById('hipo-form').classList.remove('d-none');
+            } else if (estado === 'hiper') {
+                document.getElementById('hiper-form').classList.remove('d-none');
+            }
+        }
+
+        function guardarFormulario(event) {
+            event.preventDefault();  // Evitar envío del formulario por defecto
+
+            // Verificar qué estado se seleccionó
+            const estadoSeleccionado = document.getElementById('estado_glucosa').value;
+
+            if (estadoSeleccionado === "ninguna") {
+                // Solo guardar el formulario general
+                document.getElementById('formularioPrincipal').submit();
+            } else if (estadoSeleccionado === "hipo" || estadoSeleccionado === "hiper") {
+                // Verificar que los campos de glucosa e insulina estén completos
+                const glucosa = document.getElementById(estadoSeleccionado === "hipo" ? 'glucosa1' : 'glucosa2');
+                const hora = document.getElementById(estadoSeleccionado === "hipo" ? 'hora1' : 'hora2');
+                const correccion = document.getElementById('correccion');
+                
+                if (glucosa.value && hora.value && (estadoSeleccionado === "hiper" ? correccion.value : true)) {
+                    document.getElementById('formularioPrincipal').submit();
+                } else {
+                    alert("Por favor, complete todos los campos del formulario de estado.");
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

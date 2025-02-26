@@ -1,0 +1,8 @@
+body{
+    background-color: bisque;
+}
+
+h1, form {
+    text-align: center;
+    margin-top: 10px;
+}
