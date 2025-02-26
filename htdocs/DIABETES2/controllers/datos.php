@@ -1,45 +1,57 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../auth/login.php');
     exit();
 }
-$usuario = $_SESSION['usuario'];
 
 require_once "../auth/login1.php";
 $con = new mysqli($localhost, $username, $pw, $database);
 
 if ($con->connect_error) {
-    die(json_encode(['error' => 'Error de conexión: ' . $con->connect_error]));
+    die(json_encode(["error" => "Error de conexión: " . $con->connect_error]));
+}
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Consulta a la base de datos de comida
+$sql = "SELECT tipo_comida, raciones FROM comida";
+$result = $con->query($sql);
+
+$dataComida = [];
+$dataComida[] = ['Topping', 'Slices'];
+
+while ($row = $result->fetch_assoc()) {
+    $dataComida[] = [$row['tipo_comida'], (int)$row['raciones']];
 }
 
-header('Content-Type: application/json');
+// Consulta a la base de datos de hipoglucemia
+$sqlHipo = "SELECT glucosa, hora, tipo_comida, fecha FROM hipoglucemia";
+$resultHipo = $con->query($sqlHipo);
 
-$sqlGlucosa = "SELECT * FROM control_glucosa ORDER BY fecha";
-$resultGlucosa = $con->query($sqlGlucosa);
+$dataHipo = [];
+$dataHipo[] = ['Hora', 'Glucosa'];
 
-$glucosaData = [];
-$glucosaLabels = [];
-
-while ($row = $resultGlucosa->fetch_assoc()) {
-    $glucosaData[] = (float) $row['glucosa'];
-    $glucosaLabels[] = $row['fecha'];
+while ($row = $resultHipo->fetch_assoc()) {
+    $dataHipo[] = [(string)$row['hora'], (int)$row['glucosa']];
 }
 
-$hipoCount = $con->query("SELECT COUNT(*) as count FROM hipoglucemia")->fetch_assoc()['count'] ?? 0;
-$hiperCount = $con->query("SELECT COUNT(*) as count FROM hiperglucemia")->fetch_assoc()['count'] ?? 0;
+// Consulta a la base de datos de hiperglucemia
+$sqlHiper = "SELECT glucosa, hora, correccion, tipo_comida, fecha FROM hiperglucemia";
+$resultHiper = $con->query($sqlHiper);
 
-$con->close();
+$dataHiper = [];
+$dataHiper[] = ['Hora', 'Glucosa'];
 
+while ($row = $resultHiper->fetch_assoc()) {
+    $dataHiper[] = [(string)$row['hora'], (int)$row['glucosa']];
+}
+
+// Enviar datos en formato JSON
 echo json_encode([
-    'glucosaLabels' => $glucosaLabels,
-    'glucosaData' => $glucosaData,
-    'hipoCount' => $hipoCount,
-    'hiperCount' => $hiperCount,
+    'comida' => $dataComida,
+    'hipoglucemia' => $dataHipo,
+    'hiperglucemia' => $dataHiper
 ]);
 ?>

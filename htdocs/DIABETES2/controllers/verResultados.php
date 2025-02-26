@@ -80,6 +80,8 @@ function mostrarTarjetaDia($dia, $mes, $anio, $desayunoData, $comidaData, $merie
         echo "</ul>";
         echo "</div>";
     }
+   
+
 
     // Hiperglucemias
     if (isset($hiperData[$dia]['Desayuno'])) {
@@ -416,6 +418,66 @@ $con->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" href="../assets/css/verResultados.css"> 
+    
+    <style>
+        .consulta-container {
+    background-color: white;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--space-xl);
+}
+
+.consulta-form {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.consulta-text {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    gap: var(--space-sm);
+}
+
+.consulta-icon {
+    font-size: 1.5rem;
+    color: var(--info);
+}
+
+.btn-consulta {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    transition: all 0.3s;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-consulta:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-consulta i {
+    font-size: 1.2rem;
+}
+
+    </style>
 </head> 
 <body> 
     <div class="container">
@@ -423,7 +485,17 @@ $con->close();
         <div class="header">
             <h1 class="welcome-text">Bienvenido, <?php echo htmlspecialchars($usuario)?></h1>
         </div>
-
+        <div class="consulta-container">
+            <form method="post" action="verDatos.php" class="consulta-form">
+                <div class="consulta-text">
+                    <i class="fa-solid fa-magnifying-glass-chart consulta-icon"></i>
+                    <span>Consulta en estas gráficas tus:</span>
+                </div>
+                <button type="submit" class="btn-consulta">
+                    <i class="fa-solid fa-chart-bar"></i> Datos
+                </button>
+            </form>
+        </div>
         <!-- Month & Year Selector -->
         <div class="month-selector">
             <form method="POST"> 
