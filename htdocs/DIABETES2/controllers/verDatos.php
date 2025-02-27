@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datos Estadísticos</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -117,6 +119,36 @@
             border-radius: 8px;
         }
 
+        /* Navbar specific styles */
+        .navbar {
+            background-color: white;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+        }
+        
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color) !important;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
         @media (max-width: 768px) {
             .charts-row { flex-direction: column; }
             .chart-card { width: 100%; }
@@ -127,6 +159,48 @@
 </head>
 <body>
     <div class="container">
+        <!-- Improved Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heartbeat me-2"></i>Control Glucosa
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../views/index.html">
+                                <i class="fas fa-home me-1"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/datos.html">
+                                <i class="fas fa-table me-1"></i> Datos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/formularios.html">
+                                <i class="fas fa-plus-circle me-1"></i> Añadir
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/edit.html">
+                                <i class="fas fa-edit me-1"></i> Editar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="delete.html">
+                                <i class="fas fa-trash-alt me-1"></i> Eliminar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <header>
             <div class="logo">
                 <h1>Datos Estadísticos</h1>
@@ -157,6 +231,9 @@
     <footer>
         <p>&copy; 2025 Dashboard Mejorado. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         google.charts.load('current', {'packages':['corechart', 'bar']});

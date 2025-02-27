@@ -477,10 +477,80 @@ $con->close();
     font-size: 1.2rem;
 }
 
+    /* Navbar specific styles */
+    .navbar {
+            background-color: white;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+        }
+        
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color) !important;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
     </style>
 </head> 
 <body> 
     <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heartbeat me-2"></i>Control Glucosa
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../views/index.html">
+                                <i class="fas fa-home me-1"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/datos.html">
+                                <i class="fas fa-table me-1"></i> Datos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/formularios.html">
+                                <i class="fas fa-plus-circle me-1"></i> Añadir
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/edit.html">
+                                <i class="fas fa-edit me-1"></i> Editar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="delete.html">
+                                <i class="fas fa-trash-alt me-1"></i> Eliminar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <!-- Header -->
         <div class="header">
             <h1 class="welcome-text">Bienvenido, <?php echo htmlspecialchars($usuario)?></h1>
