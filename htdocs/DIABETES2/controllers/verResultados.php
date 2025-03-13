@@ -511,104 +511,104 @@ $con->close();
 </head> 
 <body> 
     <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <i class="fas fa-heartbeat me-2"></i>Control Glucosa
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../views/index.html">
-                                <i class="fas fa-home me-1"></i> Inicio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../views/datos.html">
-                                <i class="fas fa-table me-1"></i> Datos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../views/formularios.html">
-                                <i class="fas fa-plus-circle me-1"></i> Añadir
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../views/edit.html">
-                                <i class="fas fa-edit me-1"></i> Editar
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="delete.html">
-                                <i class="fas fa-trash-alt me-1"></i> Eliminar
-                            </a>
-                        </li>
-                    </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <i class="fas fa-heartbeat me-2"></i>Control Glucosa
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="../views/index.html">
+                                    <i class="fas fa-home me-1"></i> Inicio
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../views/datos.html">
+                                    <i class="fas fa-table me-1"></i> Datos
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../views/formularios.html">
+                                    <i class="fas fa-plus-circle me-1"></i> Añadir
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../views/edit.html">
+                                    <i class="fas fa-edit me-1"></i> Editar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="delete.html">
+                                    <i class="fas fa-trash-alt me-1"></i> Eliminar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </nav>
+            <!-- Header -->
+            <div class="header">
+                <h1 class="welcome-text">Bienvenido, <?php echo htmlspecialchars($usuario)?></h1>
             </div>
-        </nav>
-        <!-- Header -->
-        <div class="header">
-            <h1 class="welcome-text">Bienvenido, <?php echo htmlspecialchars($usuario)?></h1>
-        </div>
-        <div class="consulta-container">
-            <form method="post" action="verDatos.php" class="consulta-form">
-                <div class="consulta-text">
-                    <i class="fa-solid fa-magnifying-glass-chart consulta-icon"></i>
-                    <span>Consulta en estas gráficas tus:</span>
-                </div>
-                <button type="submit" class="btn-consulta">
-                    <i class="fa-solid fa-chart-bar"></i> Datos
-                </button>
-            </form>
-        </div>
-        <!-- Month & Year Selector -->
-        <div class="month-selector">
-            <form method="POST"> 
-                <h2 class="month-title">
-                    <i class="fas fa-calendar-alt me-2"></i>
-                    Registro Mensual de Insulina - 
-                    <?php echo date("F", mktime(0, 0, 0, $mes, 1, $anio)) . " " . $anio; ?> 
-                </h2> 
+            <div class="consulta-container">
+                <form method="post" action="verDatos.php" class="consulta-form">
+                    <div class="consulta-text">
+                        <i class="fa-solid fa-magnifying-glass-chart consulta-icon"></i>
+                        <span>Consulta en estas gráficas tus:</span>
+                    </div>
+                    <button type="submit" class="btn-consulta">
+                        <i class="fa-solid fa-chart-bar"></i> Datos
+                    </button>
+                </form>
+            </div>
+            <!-- Month & Year Selector -->
+            <div class="month-selector">
+                <form method="POST"> 
+                    <h2 class="month-title">
+                        <i class="fas fa-calendar-alt me-2"></i>
+                        Registro Mensual de Insulina - 
+                        <?php echo date("F", mktime(0, 0, 0, $mes, 1, $anio)) . " " . $anio; ?> 
+                    </h2> 
 
-                <!-- Selección de mes --> 
-                <select name="mes" class="form-select"> 
-                    <?php 
-                    for ($i = 1; $i <= 12; $i++) { 
-                        $nombreMes = date("F", mktime(0, 0, 0, $i, 1, $anio)); 
-                        $selected = ($i == $mes) ? "selected" : ""; 
-                        echo "<option value='$i' $selected>$nombreMes</option>"; 
-                    } 
-                    ?> 
-                </select> 
-                
-                <!-- Selección de año --> 
-                <select name="anio" class="form-select"> 
-                    <?php 
-                    for ($i = date("Y") - 5; $i <= date("Y") + 5; $i++) { 
-                        $selected = ($i == $anio) ? "selected" : ""; 
-                        echo "<option value='$i' $selected>$i</option>"; 
-                    } 
-                    ?> 
-                </select>
+                    <!-- Selección de mes --> 
+                    <select name="mes" class="form-select"> 
+                        <?php 
+                        for ($i = 1; $i <= 12; $i++) { 
+                            $nombreMes = date("F", mktime(0, 0, 0, $i, 1, $anio)); 
+                            $selected = ($i == $mes) ? "selected" : ""; 
+                            echo "<option value='$i' $selected>$nombreMes</option>"; 
+                        } 
+                        ?> 
+                    </select> 
+                    
+                    <!-- Selección de año --> 
+                    <select name="anio" class="form-select"> 
+                        <?php 
+                        for ($i = date("Y") - 5; $i <= date("Y") + 5; $i++) { 
+                            $selected = ($i == $anio) ? "selected" : ""; 
+                            echo "<option value='$i' $selected>$i</option>"; 
+                        } 
+                        ?> 
+                    </select>
 
-                <div class="date-selector">
-                    <label for="dia">Seleccionar día específico (opcional):</label>
-                    <input type="number" name="dia" id="dia" min="1" max="31" class="form-control mb-2" 
-                           value="<?php echo isset($_POST['dia']) ? $_POST['dia'] : ''; ?>">
-                    <small class="text-danger">**Deja en blanco para mostrar todos los días**</small>
-                </div>
-                
-                <button type="submit" class="update-btn">
-                    <i class="fas fa-sync-alt me-2"></i>Actualizar
-                </button>
+                    <div class="date-selector">
+                        <label for="dia">Seleccionar día específico (opcional):</label>
+                        <input type="number" name="dia" id="dia" min="1" max="31" class="form-control mb-2" 
+                            value="<?php echo isset($_POST['dia']) ? $_POST['dia'] : ''; ?>">
+                        <small class="text-danger">**Deja en blanco para mostrar todos los días**</small>
+                    </div>
+                    
+                    <button type="submit" class="update-btn">
+                        <i class="fas fa-sync-alt me-2"></i>Actualizar
+                    </button>
 
-            </form> 
-        </div>
+                </form> 
+            </div>
 
         <!-- Tarjetas de días -->
         <div class="days-container">

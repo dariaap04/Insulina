@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../auth/login.php');
+    header('Location: login.php');
     exit();
 }
 
-require_once "../auth/conexion.php";
+require_once "conexion.php";
 $conexion = new mysqli ($servername, $username, $passworddb, $dbname);
 
 if ($conexion->connect_error) {

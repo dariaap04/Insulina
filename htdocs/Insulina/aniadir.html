@@ -8,7 +8,55 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/css/formularios.css" rel="stylesheet">
+    <link href="formularios.css" rel="stylesheet">
+    <style>
+         .navbar {
+            background: white;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            padding: 15px 25px;
+            position: relative;
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 8px 16px !important;
+            margin: 0 5px;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(99, 102, 241, 0.08);
+        }
+        
+        .nav-link.active {
+            color: white !important;
+            background: var(--primary-gradient);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
     <div class="form-container">
@@ -16,8 +64,43 @@
             <h1><i class="fas fa-utensils"></i> Registro de Comidas</h1>
             <p class="text-muted">Registra tus comidas y niveles de glucosa</p>
         </div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heartbeat me-2"></i>Control Glucosa
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                <i class="fas fa-home me-1"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="consulta.php">
+                                <i class="fas fa-table me-1"></i> Consulta
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="aniadir.html">
+                                <i class="fas fa-plus-circle me-1"></i> Añadir
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="verDatos.php">
+                                <i class="fas fa-chart-bar me-1"></i> Estadísticas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         
-        <form id="formularioPrincipal" action="../controllers/saveAll.php" method="post">
+        <form id="formularioPrincipal" action="aniadir.php" method="post">
             <div class="section">
                 <div class="section-title">
                     <i class="fas fa-calendar-alt"></i> Información General

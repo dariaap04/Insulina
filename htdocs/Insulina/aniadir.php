@@ -2,7 +2,7 @@
 session_start();
 
 function myConexion() {
-    require_once "../auth/conexion.php";
+    require_once "conexion.php";
     $conexion = new mysqli($servername, $username, $passworddb, $dbname);
     if ($conexion->connect_error) {
         die("Error de conexion" . $conexion->connect_error);
@@ -77,7 +77,8 @@ function insertarComida($conectada, $id_usu) {
                 if (!$stmt->execute()) {
                     echo "❌ Error en la ejecución: " . $stmt->error;
                 } else {
-                    echo "✅ Registro insertado correctamente.";
+                    //echo "✅ Registro insertado correctamente.";
+                    header("Location: consulta.php");
                 } 
             } catch (mysqli_sql_exception $e) {
                 echo "❌ Error al añadir datos: " . $e->getMessage();

@@ -27,7 +27,7 @@ function validarLogueo($conectada) {
                 if (password_verify($contra,$usuario_data['contra'])) {
                     echo "Contraseña correcta";
                     $_SESSION["usuario"] = $usuario;
-                    header("Location: ../views/formularios.html");
+                    header("Location: consulta.php");
                 } else {
                     echo "Contraseña incorrecta";
                 }
