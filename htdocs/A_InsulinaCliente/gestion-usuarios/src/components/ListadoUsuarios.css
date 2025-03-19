@@ -1,0 +1,128 @@
+/* Elegant Table Design */
+.tabla {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 25px 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .tabla thead {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+  }
+  
+  .tabla th {
+    color: white;
+    font-weight: 500;
+    padding: 16px;
+    text-align: left;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+  }
+  
+  .tabla tbody tr {
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .tabla tbody tr:nth-child(even) {
+    background-color: #f8f9ff;
+  }
+  
+  .tabla td {
+    padding: 14px 16px;
+    border: none;
+    border-bottom: 1px solid #eef2f7;
+    color: #5a5c69;
+    font-size: 0.95rem;
+  }
+  
+  .tabla tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .celda-id {
+    text-align: right;
+    font-weight: 600;
+    color: #4e73df;
+  }
+  
+  .celda-nombre,
+  .celda-apellidos,
+  .celda-usuario {
+    text-align: left;
+  }
+  
+  .celda-fecha {
+    color: #666;
+  }
+  
+  .celda-contrasena {
+    font-family: monospace;
+  }
+  
+  .fila:hover {
+    background-color: #f2f7ff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Estilo para botones */
+  .tabla button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .tabla button:first-of-type {
+    background-color: #4e73df;
+    color: white;
+  }
+  
+  .tabla button:last-of-type {
+    background-color: #e74a3b;
+    color: white;
+  }
+  
+  .tabla button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para el botón añadir nuevo usuario */
+  button[onclick="showForm()"] {
+    background: linear-gradient(135deg, #36b37e, #1cad6a);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(28, 173, 106, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  button[onclick="showForm()"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(28, 173, 106, 0.3);
+  }
+  
+  button[onclick="showForm()"]:before {
+    content: "+";
+    margin-right: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }

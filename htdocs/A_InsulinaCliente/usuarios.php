@@ -27,7 +27,7 @@
      }       
 
 
-     function getUsuarioPorId($conectada, $id_usu){
+     function getUsuById($conectada, $id_usu){
         $sqlUsuario = "SELECT * FROM usuario WHERE id_usu = $id_usu";
         $stmt = $conectada ->query($sqlUsuario); 
         $stmt->bind_param("i", $id_usu);
@@ -42,55 +42,76 @@
         
      }
 
-        function createUsuarios($conectada /*añadir parametros despues*/){
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $fecha_nacimiento = $_POST["fecha_nacimiento"];
-                $nombre = $_POST["nombre"];
-                $apellidos = $_POST["apellidos"];
-                $usuario = $_POST["usuario"];
-                $contra = password_hash($_POST["contra"], PASSWORD_DEFAULT);
+     function createUsu($conectada /*añadir parametros despues*/){
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            $json = file_get_contents('php://input');
+            $data = json_decode($json, true);
+            if(isset($data["id_usu"]) && isset($data["usuario"]) && isset($data["fecha_nacimiento"]) && isset($data["nombre"])
+            && isset($data["apellidos"]) && isset($data["contra"])) {
+                $id_usu = $data["id_usu"];
+                $fecha_nacimiento = $data["fecha_nacimiento"];
+                $nombre = $data["nombre"];
+                $apellidos = $data["apellidos"];
+                $usuario = $data["usuario"];
+                $contra = password_hash($data["contra"], PASSWORD_DEFAULT);
                 
                 $usuarios = getAllUsuarios($conectada);
-                foreach($usuarios as $usuario){
-                    if($usuario["usuario"] == $usuario){
+                foreach($usuarios as $usu){
+                    if($usu["usuario"] == $usuario){
                         return "Ya hay un usuario creado con el mismo nombre.";
                     }
                 }
-            }
-            $stmt = $conectada->prepare("INSERT INTO usuario (fecha_nacimiento, nombre, apellidos, usuario, contra) VALUES (?,?,?,?,?)");
-            $stmt->bind_param("sssss", $fecha_nacimiento, $nombre, $apellidos, $usuario, $contra);
-            $stmt->execute();
-            $stmt->close();
-
-
-
-            return "Usuario creado correctamente";
-        }
-
-        function updateUsuario($conectada, $id_usu /*añadir parametros despues*/){
-            if($_SERVER["REQUEST_METHOD"] == "PUT"){
-                parse_str(file_get_contents("php://input"), $datos);
-                $fecha_nacimiento = $datos["fecha_nacimiento"];
-                $nombre = $datos["nombre"];
-                $apellidos = $datos["apellidos"];
-                $usuario = $datos["usuario"];
                 
-                $stmt = $conectada->prepare("UPDATE usuario SET fecha_nacimiento=?, nombre=?, apellidos=?, usuario=? WHERE id_usu=?");
-                $stmt->bind_param("ssssii", $fecha_nacimiento, $nombre, $apellidos, $usuario, $id_usu);
+                $stmt = $conectada->prepare("INSERT INTO usuario (id_usu, fecha_nacimiento, nombre, apellidos, usuario, contra) VALUES (?,?,?,?,?,?)");
+                $stmt->bind_param("isssss", $id_usu, $fecha_nacimiento, $nombre, $apellidos, $usuario, $contra);
                 $stmt->execute();
                 $stmt->close();
-            }else{
-            return "Peticion incorrecta";
+                
+                return "Usuario creado correctamente";
+            } else {
+                return "Faltan parámetros requeridos";
             }
-            return "Usuario actualizado correctamente";
         }
-        function deleteUsuario($conectada, $id_usu){
-            $stmt = $conectada->prepare("DELETE FROM usuario WHERE id_usu=?");
-            $stmt->bind_param("i", $id_usu);
+        return "Método no permitido";
+    }
+
+    function updateUsuById($conectada, $id_usu){
+        if($_SERVER["REQUEST_METHOD"] == "PUT"){
+            // Get JSON data
+            $json = file_get_contents('php://input');
+            $datos = json_decode($json, true);
+            
+            $fecha_nacimiento = $datos["fecha_nacimiento"];
+            $nombre = $datos["nombre"];
+            $apellidos = $datos["apellidos"];
+            $usuario = $datos["usuario"];
+            
+            $stmt = $conectada->prepare("UPDATE usuario SET fecha_nacimiento=?, nombre=?, apellidos=?, usuario=? WHERE id_usu=?");
+            $stmt->bind_param("ssssi", $fecha_nacimiento, $nombre, $apellidos, $usuario, $id_usu);
             $stmt->execute();
             $stmt->close();
-            return "Usuario eliminado correctamente";
+        } else {
+            return "Peticion incorrecta";
         }
+        return "Usuario actualizado correctamente";
+    }
+    function deleteUsuById($conectada, $id_usu){
+        if (!$id_usu) {
+            return "Error: ID de usuario no proporcionado";
+        }
+        
+        $stmt = $conectada->prepare("DELETE FROM usuario WHERE id_usu=?");
+        $stmt->bind_param("i", $id_usu);
+        $stmt->execute();
+        
+        if ($stmt->affected_rows > 0) {
+            $stmt->close();
+            return "Usuario eliminado correctamente";
+        } else {
+            $stmt->close();
+            return "No se encontró el usuario con ID: " . $id_usu;
+        }
+    }
 
         $conectada = myConexion();
 
@@ -98,7 +119,7 @@
             case 'GET':
                 if(isset($_GET["id_usu"])){
                     $id_usu = $_GET["id_usu"];
-                    $datosUsuario = getUsuarioPorId($conectada, $id_usu);
+                    $datosUsuario = getUsuById($conectada, $id_usu);
                     echo json_encode($datosUsuario);
                 }else{
                     $usuarios = getAllUsuarios($conectada); 
@@ -107,17 +128,33 @@
                 break;
 
             case 'POST':
-                $datosUsuario = createUsuarios($conectada);
+                $datosUsuario = createUsu($conectada);
                 echo json_encode($datosUsuario);
                 break;    
-            case 'PUT':
-                $id_usu = $_GET["id_usu"];
-                $datosUsuario = updateUsuario($conectada, $id_usu);
-                echo json_encode($datosUsuario);
-                break;
+                case 'PUT':
+                    $json = file_get_contents('php://input');
+                    $datos = json_decode($json, true);
+                    
+                    if (!isset($datos["id_usu"])) {
+                        echo json_encode("Error: ID de usuario no proporcionado");
+                        break;
+                    }
+                    
+                    $id_usu = $datos["id_usu"];
+                    $datosUsuario = updateUsuById($conectada, $id_usu);
+                    echo json_encode($datosUsuario);
+                    break;
             case 'DELETE':
-                $id_usu = $_GET["id_usu"];
-                $datosUsuario = deleteUsuario($conectada, $id_usu);
+                $json = file_get_contents('php://input');
+                $datos = json_decode($json, true);
+                
+                if (!isset($datos["id_usu"])) {
+                    echo json_encode("Error: ID de usuario no proporcionado");
+                    break;
+                }
+                
+                $id_usu = $datos["id_usu"];
+                $datosUsuario = deleteUsuById($conectada, $id_usu);
                 echo json_encode($datosUsuario);
                 break;
             default:
