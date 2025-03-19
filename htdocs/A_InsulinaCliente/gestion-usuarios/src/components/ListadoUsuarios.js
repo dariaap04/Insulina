@@ -14,6 +14,7 @@ const ListadoUsuarios = () => {
   const [usuarioActual, setUsuarioActual] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [nombreUsuarioBusqueda, setNombreUsuarioBusqueda] = useState("");
 
   const CargarUsuarios = async () => {
     setLoading(true);
@@ -36,21 +37,21 @@ const ListadoUsuarios = () => {
 
   const updateUsu = (usuario) => showForm(usuario);
 
-  const deleteUsu = async (idUsu) => {
-    if (!window.confirm(`¿Estás seguro de que deseas borrar el usuario con ID ${idUsu}?`)) {
+  const deleteUsu = async (id) => {
+    if (!window.confirm(`¿Estás seguro de que deseas borrar el usuario con ID ${id}?`)) {
       return;
     }
-
+  
     setLoading(true);
-    let mensajeError = `Se ha producido un error al borrar el usuario con identificador ${idUsu}`;
+    let mensajeError = `Se ha producido un error al borrar el usuario con identificador ${id}`;
     try {
-      console.log("Borrando usuario con ID:", idUsu);
-      const exito = await deleteUsuById(idUsu);
-
-      if (!exito) {
+      //console.log("Borrando usuario con ID:", id);
+      const exito = await deleteUsuById(id);
+  
+      if (exito === false) {
         alert(mensajeError);
       } else {
-        alert(`El usuario con identificador ${idUsu} se ha borrado correctamente`);
+        alert(`El usuario con identificador ${id} se ha borrado correctamente`);
         CargarUsuarios();
       }
     } catch (e) {
@@ -66,7 +67,7 @@ const ListadoUsuarios = () => {
     try {
       if (usuarioActual) {
         console.log("Actualizando usuario:", usuario);
-        await updateUsuById({ ...usuario, id_usu: usuarioActual.id_usu }); // Asegúrate de pasar el ID correcto
+        await updateUsuById({ ...usuario, id_usu: usuarioActual.id_usu, usuario: usuarioActual.usuario }); // Asegúrate de pasar el ID correcto
         alert(
           `El usuario con identificador ${usuarioActual.id_usu} se ha modificado correctamente`
         );
@@ -89,15 +90,34 @@ const ListadoUsuarios = () => {
     CargarUsuarios();
   }, []);
 
+  const buscarPorUsuario = () => {
+    const usuarioEncontrado = usuarios.find((u) => u.usuario === nombreUsuarioBusqueda);
+    if (usuarioEncontrado) {
+      showForm(usuarioEncontrado);
+    } else {
+      alert("Usuario no encontrado");
+    }
+  };
   return (
     <>
       <h1>Gestión de Usuarios</h1>
-      <button onClick={() => showForm(null)} disabled={loading}>
-        {loading ? "Cargando..." : "Añadir nuevo usuario"}
-      </button>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Buscar usuario por nombre"
+          value={nombreUsuarioBusqueda}
+          onChange={(e) => setNombreUsuarioBusqueda(e.target.value)}
+        />
+        <button onClick={buscarPorUsuario}>Buscar y Modificar</button>
+      </div>
+      <div className="button-container">
+        <button className="btn-add-user" onClick={() => showForm(null)} disabled={loading}>
+          {loading ? "Cargando..." : "Añadir nuevo usuario"}
+        </button>
+      </div>
 
-      {loading && <p>Cargando datos...</p>}
-
+      {loading && <p className="loading-message">Cargando datos...</p>}
+      
       <table className="tabla">
         <thead>
           <tr>
@@ -106,7 +126,7 @@ const ListadoUsuarios = () => {
             <th>Apellidos</th>
             <th>Fecha de Nacimiento</th>
             <th>Usuario</th>
-            <th>Contraseña</th>
+           {/*  <th>Contraseña</th> */}
             <th>Acciones</th>
           </tr>
         </thead>
@@ -118,16 +138,16 @@ const ListadoUsuarios = () => {
               <td className="celda-apellidos">{usu.apellidos}</td>
               <td className="celda-fecha">{usu.fecha_nacimiento}</td>
               <td className="celda-usuario">{usu.usuario}</td>
-              <td className="celda-contrasena">{usu.contra}</td>
+              {/* <td className="celda-contrasena">{usu.contra}</td> */}
               <td>
-                <button onClick={() => updateUsu(usu)} disabled={loading}>Modificar</button>
+                {/* <button onClick={() => updateUsu(usu)} disabled={loading}>Modificar</button> */}
                 <button onClick={() => deleteUsu(usu.id_usu)} disabled={loading}>Borrar</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
+          <hr />
       {formVisible && (
         <div className="modal-form">
           <FormUsuarios

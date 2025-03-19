@@ -73,6 +73,7 @@ export const deleteUsuById = async (id) => {
       "Content-Type": "application/json",
     },
     mode: "cors",
+    body: JSON.stringify({ id_usu: id }), /*aqui estaba el error*/
   };
   const mensajeError = "Error al eliminar la nota";
   try {
