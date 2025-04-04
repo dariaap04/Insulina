@@ -27,7 +27,7 @@
                 if($result->num_rows>0){
                     echo" Has iniciado sesion correctamente";
                     $_SESSION["usuario"] = $usuario; 
-                    header("Location: jugar.php"); 
+                    header("Location: ../ejercicio2/inicio.php"); 
                 }else{
                     echo "Usuario o contraseña incorrectos";
                 }
