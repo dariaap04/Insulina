@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador con Límite</title>
+</head>
+<body>
+    <h1>Ejercicio: Contador Con Límite</h1>
+    <ul>
+        <li>El contador debe empezar desde 0 y debe incrementarse al hacer clic en el botón "Incrementar".</li>
+        <li>El contador no puede exceder de 10. Cuando llegue a 10, debe dejar de incrementarse.</li>
+        <li>El botón de "Incrementar" debe desactivarse (volverse gris) cuando el contador llegue a 10.</li>
+        <li>Si el contador está en 10 y se hace clic en "Reiniciar", el contador debe volver a 0 y el botón "Incrementar" debe volver a ser funcional.</li>
+    </ul>
+
+    <button id="btnIncrementar" onclick="incrementar()">Click para llegar hasta 10</button>
+        <p id="click">Clicks: 0</p>
+    <button onclick="reiniciar()">Reiniciar</button>
+</body>
+    <script>
+       let contador =0; 
+       const limite = 10; 
+       const contadorElemento = document.getElementById("click");
+       const btnIncrementar = document.getElementById("btnIncrementar");
+
+        function incrementar(){
+            if(contador<limite){
+                contador++; 
+                contadorElemento.textContent = "Clicks: " + contador;   
+            }
+            if(contador === limite){
+                btnIncrementar.disabled = true; 
+            }
+        }
+        function reiniciar(){
+            contador =0; 
+            contadorElemento.textContent = "Clicks: " + contador; 
+            btnIncrementar.disabled = false; 
+
+        }
+
+    </script>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog de Viajes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido al Blog de Viajes</h1>
+        <nav>
+            <a href="#" id="inicio">Inicio</a>
+            <a href="#" id="añadir-entrada">Añadir Entrada</a>
+        </nav>
+    </header>
+    <main>
+        <section id="entradas"></section>
+        <section id="formulario-agregar" style="display: none;">
+            <h2>Agregar Nueva Entrada</h2>
+            <form id="form-nueva-entrada">
+                <input type="text" id="titulo" placeholder="Título del viaje" required>
+                <textarea id="descripcion" placeholder="Descripción corta" required></textarea>
+                <input type="text" id="ubicacion" placeholder="Ubicación del destino" required>
+                <input type="url" id="foto" placeholder="URL de la foto" required>
+                <button type="submit">Agregar Entrada</button>  
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Blog de Viajes por Daria Alonso Presumido</p>
+    </footer>
+    <script src="script/viajes.js"></script>
+</body>
+</html>

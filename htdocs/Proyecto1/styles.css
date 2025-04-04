@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    grid-template-rows: auto auto; /* 2 filas */
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  /*   margin-bottom:300px ; */
+}
+
+/* Estilos generales de las tarjetas */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    position: relative;
+    width: 300px;
+    /* //margin-bottom: 300px; */
+}
+
+.card img {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    width: 50px;
+}
+
+/* Líneas de colores en la parte superior */
+.supervisor {
+    margin-left: 40px;
+    border-top: 4px solid #1abc9c;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.team {
+    border-top: 4px solid #e74c3c;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.calculator {
+   margin-right: 250px;
+    border-top: 4px solid #3498db;
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+}
+
+.karma {
+   /*  margin-bottom: 300px; */
+    border-top: 4px solid #f39c12;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}

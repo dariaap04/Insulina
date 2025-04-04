@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Click</title>
+</head>
+<body>
+    <h1>Pulsa Click y subelo al máximo nivel</h1>
+    <button onclick="presiona()">Pincha</button>
+    <p id="contador">Clicks: 0</p>
+    <button onclick="reiniciar()">reiniciar</button>
+</body>
+<script>
+    function presiona(){
+        let contadorElemento = document.getElementById("contador");  
+            let contador = parseInt(contadorElemento.textContent.replace("Clicks: ", ""));  
+            contador++;  
+            contadorElemento.textContent = "Clicks: " + contador;     
+    }
+    function reiniciar(){
+        let reiniciar = document.getElementById("contador"); 
+        reiniciar.textContent="Clicks: 0";
+    }
+</script>
+</html>
