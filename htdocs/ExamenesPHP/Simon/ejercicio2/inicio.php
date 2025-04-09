@@ -28,7 +28,16 @@
         <?php
             include "pintar_circulos.php"; 
             $colores = ["red", "blue", "yellow", "green"]; 
-            pintarCirculos($colores[array_rand($colores)] ,$colores[array_rand($colores)], $colores[array_rand($colores)], $colores[array_rand($colores)]);
+            $combinacion = [
+                $colores[array_rand($colores)],
+                $colores[array_rand($colores)], 
+                $colores[array_rand($colores)], 
+                $colores[array_rand($colores)]
+                
+            ];
+            pintarCirculos($combinacion[0], $combinacion[1], $combinacion[2], $combinacion[3]);
+            $_SESSION["combinacion"] = $combinacion;
+            var_dump($_SESSION["combinacion"]);
            
         ?>
         <br>

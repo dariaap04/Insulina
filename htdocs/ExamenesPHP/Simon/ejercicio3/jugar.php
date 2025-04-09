@@ -1,90 +1,73 @@
 <?php
-session_start();
-include "../ejercicio2/pintar_circulos.php"; // Incluimos la función de pintar círculos
+    session_start(); 
+    include "../ejercicio2/pintar_circulos.php";
+    $usuario=$_SESSION["usuario"];    
+    $combinacion = $_SESSION["combinacion"]; 
 
-// Si el usuario no está logueado, redirigir a index.php
-/* if (!isset($_SESSION['usuario'])) {
-    header("Location: ../ejercicio1/index.php");
-    exit();
-} */
-
-// Si no existe la combinación generada, redirigir a inicio.php
-/* if (!isset($_SESSION['combinacion'])) {
-    header("Location: ../ejercicio2/inicio.php");
-    exit();
-} */
-
-// Inicializar la jugada del usuario si no existe
-if (!isset($_SESSION['usuario'])) {
-    $_SESSION['usuario'] = array();
-}
-
-// Si se ha pulsado un color
-if (isset($_GET['color'])) {
-    $color = $_GET['color'];
-    // Añadir el color a la jugada del usuario
-    $_SESSION['usuario'][] = $color;
-    
-    // Si ya se han realizado las 4 pulsaciones, comprobar si es acierto o fallo
-    if (count($_SESSION['usuario']) == 4) {
-        // Comprobar si la jugada coincide con la combinación
-        if ($_SESSION['usuario'] == $_SESSION['combinacion']) {
-            header("Location: acierto.php");
-        } else {
-            header("Location: fallo.php");
+        if(!isset($_SESSION["circulos"]) ){
+            $_SESSION["circulos"] = ["black", "black", "black", "black"];
         }
-        exit();
-    }
     
-    // Redireccionar para evitar reenvíos de formulario
-    header("Location: jugar.php");
-    exit();
-}
+        if(!isset($_SESSION["contador"])){
+            $_SESSION["contador"]=0; 
+        }
+        if (isset($_POST['reiniciar'])) {
+            // Restablecer las variables de sesión a su estado inicial
+            $_SESSION["circulos"] = ["black", "black", "black", "black"];
+            $_SESSION["contador"] = 0;
+            header("Location: ".$_SERVER['PHP_SELF']); // Recargar la página
+            exit;
+        }
 
-// Obtener los colores de la jugada actual para pintarlos
-$colores = array('black', 'black', 'black', 'black');
-for ($i = 0; $i < count($_SESSION['usuario']); $i++) {
-    $colores[$i] = $_SESSION['usuario'][$i];
-}
+        $circulos = $_SESSION["circulos"];
+        $contador = $_SESSION["contador"];
+        var_dump($contador);
+        if(isset($_POST["color"])){
+            $color = $_POST["color"]; 
+            $circulos[$contador] = $color;
+            $_SESSION["contador"]++;
+       
+            $_SESSION["circulos"] = $circulos;
+            
+            if($contador >=3){
+                if($circulos === $combinacion){
+                    header("Location: aciertos.php");
+                    exit;
+                }else{
+                    header("Location: fallos.php");
+                    exit;
+                }
+            }
+        }
+        //session_destroy();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Juego Simon</title>
-    <style>
-        .boton-color {
-            padding: 10px 20px;
-            margin: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .contenedor {
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-    <div class="contenedor">
-        <h2>Juego Simon - Usuario: <?php echo $_SESSION['usuario']; ?></h2>
-        
+    <h2>Simon</h2>
+    <h3>Hola, <?php echo $usuario ?>. Pulsa los botones en el orden correspondiente </h3>
+    <div>
         <?php
-        // Pintamos los círculos según el estado actual de la jugada
-        pintarCirculos($colores[0], $colores[1], $colores[2], $colores[3]);
+            pintarCirculos($circulos[0], $circulos[1], $circulos[2], $circulos[3]);
+
         ?>
-        
-        <div>
-            <p>Selecciona los colores en orden:</p>
-            <a href="jugar.php?color=red" class="boton-color" style="background-color: red; color: white;">ROJO</a>
-            <a href="jugar.php?color=blue" class="boton-color" style="background-color: blue; color: white;">AZUL</a>
-            <a href="jugar.php?color=yellow" class="boton-color" style="background-color: yellow; color: black;">AMARILLO</a>
-            <a href="jugar.php?color=green" class="boton-color" style="background-color: green; color: white;">VERDE</a>
-        </div>
-        
-        <div>
-            <p>Llevas <?php echo count($_SESSION['jugada_usuario']); ?> de 4 colores seleccionados</p>
-        </div>
     </div>
-</body>
+    <div>
+        <form method="POST" action="">
+            <button type="submit" name="color" value= "red" style="background-color: red;">ROJO</button>
+            <button type="submit" name="color" value= "blue" style="background-color: blue;">AZUL</button>
+            <button type="submit" name="color" value= "yellow" style="background-color: yellow;">AMARILLO</button>
+            <button type="submit" name="color" value= "green" style="background-color: green;">VERDE</button>
+        </form>
+    </div>
+    <form method="POST" action="">
+        <button type="submit" name="reiniciar">Reiniciar Juego</button>
+    </form>
+</body> 
 </html>
