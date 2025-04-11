@@ -2,6 +2,12 @@
 session_start();
 $usuario = $_SESSION["usuario"];
 
+
+if(!isset($_SESSION["contador"])){
+    $_SESSION["contador"] =0;
+}
+$contador = $_SESSION["contador"];
+
 function myConexion(){
     include "conexion.php";
     $conexion = new mysqli($localhost, $username, $pw, $database);
@@ -12,15 +18,24 @@ function myConexion(){
 }
 $conectada = myConexion();
 
-function typeForm(){
+ $imagenMostrada="";
+    
     if($_SERVER["REQUEST_METHOD"]=="POST"){
-        if($_POST["incrementar"]){
-            $incrementar = $_POST["incrementar"]; 
-            $_SESSION["contador"] =0; 
-            
+        if(isset($_POST["incrementar"])){
+            if($_SESSION["contador"]<5){
+                $_SESSION["contador"]++;
+               
+            }
+            var_dump($_SESSION["contador"]);
+            $imagenes = ["OIP0.jfif", "OIP1.jfif", "OIP2.jfif", "OIP3.jfif", "OIP4.jfif"];
+            $index = $_SESSION["contador"]-1;
+            if($index >=0 && $index<count($imagenes)){
+                $imagenMostrada = $imagenes[$index];
+            }
         }
+
+        
     }
-}
 
 ?>
 
@@ -43,9 +58,18 @@ function typeForm(){
             </ul>
         </th>
     </table>
-    <form method="post" action="">
-        <button type="submit" name="incrementar">INCREMENTAR</button>
+    <form method="post">
+        <button type="submit" name="incrementar"
+            <?php if($_SESSION["contador"]>=5)?>
+        
+        >INCREMENTAR</button>
         <button type="submit" name="grabar"> GRABAR</button>
     </form>
+    <p>Has pulsado <?php echo $_SESSION["contador"];  ?>veces.</p>
+
+
+    <?php if($imagenMostrada):?>
+    <img src="<?php echo htmlspecialchars($imagenMostrada) ?>" alt="">
+    <?php endif; ?>
 </body>
 </html>
