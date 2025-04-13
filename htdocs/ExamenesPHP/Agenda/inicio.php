@@ -27,14 +27,16 @@ $conectada = myConexion();
                
             }
             var_dump($_SESSION["contador"]);
-            $imagenes = ["OIP0.jfif", "OIP1.jfif", "OIP2.jfif", "OIP3.jfif", "OIP4.jfif"];
-            $index = $_SESSION["contador"]-1;
-            if($index >=0 && $index<count($imagenes)){
-                $imagenMostrada = $imagenes[$index];
-            }
         }
 
         
+    }
+
+    if (isset($_POST['reiniciar'])) {
+        // Restablecer las variables de sesión a su estado inicial
+        $_SESSION["contador"] = 0;
+        header("Location: ".$_SERVER['PHP_SELF']); // Recargar la página
+        exit;
     }
 
 ?>
@@ -59,17 +61,20 @@ $conectada = myConexion();
         </th>
     </table>
     <form method="post">
-        <button type="submit" name="incrementar"
-            <?php if($_SESSION["contador"]>=5)?>
-        
-        >INCREMENTAR</button>
+    <button type="submit" name="incrementar" <?php if($_SESSION["contador"] >= 5) echo "disabled"; ?>>INCREMENTAR</button>
+
         <button type="submit" name="grabar"> GRABAR</button>
+        <button type="submit" name="reiniciar">REINICIAR</button>
     </form>
     <p>Has pulsado <?php echo $_SESSION["contador"];  ?>veces.</p>
 
 
-    <?php if($imagenMostrada):?>
-    <img src="<?php echo htmlspecialchars($imagenMostrada) ?>" alt="">
-    <?php endif; ?>
+    <?php
+    $imagenes = ["OIP0.jfif", "OIP1.jfif", "OIP2.jfif", "OIP3.jfif", "OIP4.jfif"];
+    for($i = 0; $i < $_SESSION["contador"]; $i++): ?>
+        <img src="<?php echo htmlspecialchars($imagenes[$i]); ?>" alt="" >
+    <?php endfor; ?>
+
+
 </body>
 </html>
