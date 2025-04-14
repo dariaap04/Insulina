@@ -20,11 +20,14 @@ if (isset($_POST['reiniciar'])) {
 $cartas = ["copas_02.jpg", "copas_02.jpg",
             "copas_03.jpg", "copas_03.jpg", 
             "copas_05.jpg", "copas_05.jpg"]; 
- shuffle($cartas); 
-
- for($i=0; $i<count($cartas); $i++){
-    echo "<img src='$cartas[$i]'>";
+ $_SESSION["cartas"] = $cartas;            
+ for($i=0; $i<3; $i++){
+    shuffle($cartas); 
  }
+
+/*  for($i=0; $i<count($cartas); $i++){
+    echo "<img src='$cartas[$i]'>";
+ } */
  
 
 ?>
@@ -46,23 +49,25 @@ $cartas = ["copas_02.jpg", "copas_02.jpg",
 <body>
    <h1>Bienvenid@, <?php echo $usuario?>.</h1>
    <h2>Cartas Levantadas: <?php echo $_SESSION["contador"]?></h2>
-   <form action="" method="post">
-        <button type="submit" name="carta">Levantar carta 1</button>
-        <button type="submit" name="carta">Levantar carta 2</button>
-        <button type="submit" name="carta">Levantar carta 3</button>
-        <button type="submit" name="carta">Levantar carta 4</button>
-        <button type="submit" name="carta">Levantar carta 5</button>
-        <button type="submit" name="carta">Levantar carta 6</button>
-
-        <h3>Pareja: </h3>
+   <form action="comprobar.php" method="post">
+        <button type="submit" name="levantar">Levantar carta 1</button>
+        <button type="submit" name="levantar">Levantar carta 2</button>
+        <button type="submit" name="levantar">Levantar carta 4</button>
+        <button type="submit" name="levantar">Levantar carta 5</button>
+        <button type="submit" name="levantar">Levantar carta 6</button>
+        <button type="submit" name="reiniciar">Reiniciar</button>
+   </form> 
+   <form method="post" action="resultado.php">
+   <h3>Pareja: </h3>
         <input type="text">
         <input type="text">
         <button type="submit" name="comprobar">Comprobar</button>
-        <button type="submit" name="reiniciar">Reiniciar</button>
-   </form> 
+        
+   </form>
    <?php
     $cartasNegras = ["boca_abajo.jpg", "boca_abajo.jpg", "boca_abajo.jpg", 
                     "boca_abajo.jpg", "boca_abajo.jpg", "boca_abajo.jpg"];
+                    $_SESSION["ocultas"]= $cartasNegras;
     for($i=0; $i<count($cartasNegras); $i++){
          echo "<img src='{$cartasNegras[$i]}'>";
     }
