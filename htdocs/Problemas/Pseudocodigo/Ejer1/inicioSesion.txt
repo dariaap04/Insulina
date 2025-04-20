@@ -1,0 +1,29 @@
+Enunciado: 
+Crear un sistema de inicio de sesión que permita 3 intentos para ingresar el usuario y 
+la contraseña correctos.
+Si se alcanzan los 3 intentos fallidos, mostrar "Cuenta bloqueada".
+Si el usuario y contraseña son correctos antes de eso, mostrar "Acceso concedido".
+
+Pseudocódigo: 
+
+inicializar "usuario_correcto" a "admin"
+inicializar "contraseña" a "1234"; 
+inicializar un "contador" a "0"; 
+
+Mientras "contador" es menor que 3 
+    leer "usuario_correcto"
+    leer "contraseña"
+
+    Si usuario_correcto es igual a admin y contraseña es igual a 1234
+        hacer "Acceso concedido"
+    Si no 
+        contador++
+        hacer "Cuenta bloqueada"
+
+Fin Mientras; 
+
+Aqui faltó añadir que   
+
+    si contador es igual a 3 entonces
+        hacer "cuenta bloqueada"; 
+    FinSi    

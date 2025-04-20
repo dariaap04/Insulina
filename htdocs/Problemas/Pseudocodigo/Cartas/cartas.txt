@@ -1,0 +1,32 @@
+Llamar a la session_start(); 
+Tener la session del usuario
+Si usuario no existe 
+    redirigir entrada.php
+FinSi
+
+Guardar en un array las cartas (son imagenes, pareja de 2 de 3 imagenes)
+Guardar en un array las cartas boca_abajo.jpg. 
+
+Session de combinacion 
+   for($i=0; $i<3; $i++){
+    shuffle(cartas);
+   }    
+   $_SESSION["combinacion"] = cartas; (se guarda la combiancion)
+
+Si no existe cartas levantas
+    S_SESSION["levantadas"]=0; 
+FinSi   
+Si pulsa el boton de la carta levantadas
+    $_SESSION["levantadas"]++;
+    $_POST["levantadas"][] = $_SESSION["levantada"];    
+FinSi
+
+Mostrar
+    Si $_POST["levantada"] == true
+        mostrar imagen
+        Si no 
+        mostrar boca_abajo.jpg
+    FinSi
+FinMostrar
+
+Botn de comprobar -> comprobar.php

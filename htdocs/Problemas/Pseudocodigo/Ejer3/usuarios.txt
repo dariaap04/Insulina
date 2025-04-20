@@ -1,0 +1,16 @@
+Inicio 
+    Si no esta inicilizado usuarios -> array vacío 
+    Guardarlos en una sesion ($_SESSION["usuarios"]=[])
+    Si no existe contador, inicializarlo
+    si usuarios < 5
+        leer nombre, edad, correo, contraseña
+        contador++
+        Si no es igual 
+            "No válido"
+        FInSi
+    FInSi
+    Si contador ==5
+        Guardar la sesion usuarios 
+    FInSi
+    Hacer un bucle for con la session de usuarios para visualizarlos           
+Fin Inicio    

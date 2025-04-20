@@ -1,0 +1,11 @@
+Inicio 
+si no existe edad, la definimos...$_POST["edad"]
+    Mientras que la edad sea mayor o igual a 1 y edad sea menor o igual que 120
+        la guardamos en session
+        Si edad es 0 o edad mayor igual que 120
+            hacer "Error, ingrese edad entre 1 y 120"
+        FinSi    
+
+    FinMientras 
+    Mostrar la session de la edad guardada: "Edad registrada: X años"
+Fin Inicio 
