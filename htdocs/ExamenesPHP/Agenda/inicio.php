@@ -27,6 +27,8 @@ $conectada = myConexion();
                
             }
             var_dump($_SESSION["contador"]);
+        }else{
+            header("Location: agenda.php");
         }
 
         
