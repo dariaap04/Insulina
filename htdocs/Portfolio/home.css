@@ -1,0 +1,24 @@
+:root{
+    background-origin: black;
+}
+
+body{
+    background-color: black;
+}
+
+a:hover{
+    color:violet !important;
+
+}
+
+img{
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 300px;
+    box-shadow: 0 0 15px yellow;
+}
+span{
+    margin-left: 10px;
+}

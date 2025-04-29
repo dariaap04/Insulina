@@ -68,7 +68,7 @@ $conectada = myConexion();
         <button type="submit" name="grabar"> GRABAR</button>
         <button type="submit" name="reiniciar">REINICIAR</button>
     </form>
-    <p>Has pulsado <?php echo $_SESSION["contador"];  ?>veces.</p>
+    <p>Has pulsado <?php echo $_SESSION["contador"];  ?> veces.</p>
 
 
     <?php
